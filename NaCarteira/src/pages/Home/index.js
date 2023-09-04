@@ -34,6 +34,13 @@ const list = [
     date: '20/09/2023',
     type: 1 //entrada
   },
+  {
+    id: 4,
+    label: 'Adrielly pix',
+    value: '1,00',
+    date: '21/09/2023',
+    type: 1 //entrada
+  },
 ]
 
 
