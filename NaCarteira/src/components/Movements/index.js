@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import {MotiView, AnimatePresence, MotiText} from 'moti'
+import {MotiView, AnimatePresence, MotiText} from 'moti';
 
 export default function Movements({ data }) {
     const[showValue, setShowValue] = useState(false);

@@ -5,7 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import { MotiView } from 'moti'
+import { MotiView } from 'moti';
 
 export default function Balance({saldo, gastos}) {
  return (

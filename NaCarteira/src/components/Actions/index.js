@@ -7,7 +7,7 @@ import {
     ScrollView
 } from 'react-native';
 
-import {AntDesign} from '@expo/vector-icons'
+import {AntDesign} from '@expo/vector-icons';
 
 
 export default function Actions() {
@@ -48,7 +48,6 @@ export default function Actions() {
         </View>
         <Text style={styles.labelButton}>Conta</Text>
     </TouchableOpacity>
-
 
    </ScrollView>
   );

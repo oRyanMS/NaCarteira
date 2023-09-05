@@ -4,8 +4,10 @@ import {
     Text,
 } from 'react-native';
 
-export default function Singin() {
+export default function SignIn() {
  return (
-   <View/>
+   <View>
+    <Text>TELA DE DADOS</Text>
+   </View>
   );
 }

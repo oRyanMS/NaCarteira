@@ -5,10 +5,10 @@ import{
     Text,
     StatusBar,
     TouchableOpacity,
-} from 'react-native'
+} from 'react-native';
 
-import { Feather } from '@expo/vector-icons'
-import {MotiView, MotiText} from 'moti'
+import { Feather } from '@expo/vector-icons';
+import {MotiView, MotiText} from 'moti';
 
 
 const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
@@ -55,7 +55,7 @@ export default function Header({name}){
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor: '#8000ff',
+        backgroundColor: '#FF8C00',
         paddingTop: statusBarHeigth,
         flexDirection: 'row',
         paddingStart: 16,
