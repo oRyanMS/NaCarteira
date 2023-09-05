@@ -7,16 +7,11 @@ import {
     TextInput,
 } from 'react-native';
 import { MotiView } from 'moti';
-import { useNavigation } from '@react-navigation/native'
 
-
-
-export default function SignIn() {
-  const navigation = useNavigation();
-  const [nome, setNome] = useState(false);
-  
- return (
-      <View style={styles.container}>
+const SignIn = ({navigation}) => {
+  const [userName, setUserName] = useState('');
+  return(
+    <View style={styles.container}>
         <MotiView 
         style={styles.containerheader}
         from={{
@@ -49,20 +44,29 @@ export default function SignIn() {
           
           >
             <Text style={styles.title}> Nome </Text>
-            <TextInput 
+            <TextInput
             placeholder="Digite seu nome.."
+            value={userName}
+            onChangeText={(username) => setUserName(username)}
             style={styles.input}
-            onChange={(e) => setNome(e)}
-            />
+          />
             <TouchableOpacity 
               style={styles.button}
-              onPress={ () => navigation.navigate('Home',{nome})}>
+              onPress={() =>
+                navigation.navigate('Home', {
+                  paramKey: userName,
+                })
+              }>
               <Text style={styles.buttonText}>Acessar</Text>
             </TouchableOpacity>
           </MotiView>
       </View>
   );
 }
+
+
+
+export default SignIn;
 
 const styles = StyleSheet.create({
   container:{

@@ -47,7 +47,7 @@ const list = [
 export default function Home() {
   return (
     <View style={styles.container}>
-        <Header name="Ryan Maximiano"/>
+        <Header/>
 
         <Balance saldo="9.250,90" gastos="-527,00"/>
 

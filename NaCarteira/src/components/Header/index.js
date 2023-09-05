@@ -1,9 +1,7 @@
 import React from 'react'
-import {useState, } from 'react';
 import{
     View,
     StyleSheet,
-    Text,
     StatusBar,
     TouchableOpacity,
 } from 'react-native';
@@ -14,9 +12,8 @@ import {MotiView, MotiText} from 'moti';
 
 const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
-export default function Header(){
-    const [nome, setNome] = useState(false);
-    return(
+const Header = ({route}) => {
+    return (
         <View style={styles.container}>
             <MotiView style={styles.content} 
             from={{
@@ -45,15 +42,18 @@ export default function Header(){
                     delay: 800,
                 }}
                 >
-                    {nome}</MotiText>
+                {route.params.paramKey}
+                </MotiText>
 
                 <TouchableOpacity activeOpacity={0.9} style={styles.buttonUser}>
                     <Feather name='user' size={27} color={"#fff"}/>
                 </TouchableOpacity>
             </MotiView>
         </View>
-    )
+    );
 }
+
+export default Header
 
 const styles = StyleSheet.create({
     container:{
