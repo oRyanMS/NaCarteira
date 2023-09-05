@@ -1,4 +1,5 @@
 import React from 'react'
+import {useState, } from 'react';
 import{
     View,
     StyleSheet,
@@ -13,7 +14,8 @@ import {MotiView, MotiText} from 'moti';
 
 const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
-export default function Header({name}){
+export default function Header(){
+    const [nome, setNome] = useState(false);
     return(
         <View style={styles.container}>
             <MotiView style={styles.content} 
@@ -43,7 +45,7 @@ export default function Header({name}){
                     delay: 800,
                 }}
                 >
-                    {name}</MotiText>
+                    {nome}</MotiText>
 
                 <TouchableOpacity activeOpacity={0.9} style={styles.buttonUser}>
                     <Feather name='user' size={27} color={"#fff"}/>
