@@ -64,8 +64,6 @@ const SignIn = ({navigation}) => {
   );
 }
 
-
-
 export default SignIn;
 
 const styles = StyleSheet.create({

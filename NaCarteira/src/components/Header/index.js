@@ -7,12 +7,15 @@ import{
 } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
-import {MotiView, MotiText} from 'moti';
+import { MotiView, MotiText } from 'moti';
+import { useRoute } from '@react-navigation/native';
 
 
 const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
-const Header = ({route}) => {
+const Header = () => {
+    const route = useRoute();
+
     return (
         <View style={styles.container}>
             <MotiView style={styles.content} 
