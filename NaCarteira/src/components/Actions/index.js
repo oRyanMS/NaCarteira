@@ -8,45 +8,58 @@ import {
 } from 'react-native';
 
 import {AntDesign} from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Actions() {
+    const navigation = useNavigation();
+
  return (
    <ScrollView style={styles.container} horizontal={true} showsHorizontalScrollIndicator={false}>
     
-    <TouchableOpacity style={styles.actionButton}>
+    <TouchableOpacity 
+        style={styles.actionButton}
+        onPress={() =>
+            navigation.navigate('Entrada')
+        }>
         <View style={styles.areaButton}>
             <AntDesign name='addfolder' size={26} color={'#000'}/>
         </View>
         <Text style={styles.labelButton}>Entradas</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.actionButton}>
+    <TouchableOpacity 
+        style={styles.actionButton}
+        onPress={() =>
+            navigation.navigate('Compra')
+        }>
         <View style={styles.areaButton}>
-            <AntDesign name='tagso' size={26} color={'#000'}/>
+            <AntDesign name='shoppingcart' size={26} color={'#000'}/>
         </View>
         <Text style={styles.labelButton}>Compras</Text>
     </TouchableOpacity>
     
-    <TouchableOpacity style={styles.actionButton}>
+    <TouchableOpacity 
+        style={styles.actionButton}
+        onPress={() =>
+            navigation.navigate('Carteira')
+        }>
         <View style={styles.areaButton}>
             <AntDesign name='creditcard' size={26} color={'#000'}/>
         </View>
         <Text style={styles.labelButton}>Carteira</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.actionButton}>
+    <TouchableOpacity
+        style={styles.actionButton}
+        onPress={() =>
+            navigation.navigate('Categoria')
+        }
+    >
         <View style={styles.areaButton}>
-            <AntDesign name='barcode' size={26} color={'#000'}/>
+            <AntDesign name='appstore-o' size={26} color={'#000'}/>
         </View>
-        <Text style={styles.labelButton}>Boletos</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={styles.actionButton}>
-        <View style={styles.areaButton}>
-            <AntDesign name='setting' size={26} color={'#000'}/>
-        </View>
-        <Text style={styles.labelButton}>Conta</Text>
+        <Text style={styles.labelButton}>Categorias</Text>
     </TouchableOpacity>
 
    </ScrollView>
