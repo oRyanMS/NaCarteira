@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import{
     View,
     StyleSheet,
@@ -8,14 +9,25 @@ import{
 
 import { Feather } from '@expo/vector-icons';
 import { MotiView, MotiText } from 'moti';
-import { useRoute } from '@react-navigation/native';
 
 
 const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
 const Header = () => {
-    const route = useRoute();
+    const [nomeDoUsuario, setNomeDoUsuario] = useState('');
 
+    useEffect(() => {
+        // Recupere o nome do usuário do AsyncStorage
+        AsyncStorage.getItem('nomeDoUsuario')
+          .then(nome => {
+            if (nome) {
+              setNomeDoUsuario(nome);
+            }
+          })
+          .catch(error => {
+            console.error("Erro ao recuperar o nome do usuário:", error);
+          });
+      }, []);
     return (
         <View style={styles.container}>
             <MotiView style={styles.content} 
@@ -45,7 +57,7 @@ const Header = () => {
                     delay: 800,
                 }}
                 >
-                {route.params.paramKey}
+                {nomeDoUsuario}
                 </MotiText>
 
                 <TouchableOpacity activeOpacity={0.9} style={styles.buttonUser}>

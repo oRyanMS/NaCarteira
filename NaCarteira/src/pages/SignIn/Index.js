@@ -1,15 +1,48 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { collection, addDoc } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { db } from '../../config/firebaseconfig'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../config/firebaseconfig';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
     TextInput,
+    Alert,
 } from 'react-native';
+
 import { MotiView } from 'moti';
 
-const SignIn = ({navigation}) => {
-  const [userName, setUserName] = useState('');
+const SignIn = () => {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
+
+  const handleCadastro = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      // Após o cadastro bem-sucedido, salve o nome do usuário no Firestore
+      const user = userCredential.user;
+      const userDocRef = collection(db, "Usuario");
+      await addDoc(userDocRef, {
+        nome: nome,
+        userId: user.uid,
+        // Outros campos necessários
+      });
+
+      // Salve o nome do usário no AsyncStorage
+      await AsyncStorage.setItem('nomeDoUsuario', nome);
+
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert("Erro ao cadastrar: " + error.message);
+    }
+  };
   return(
     <View style={styles.container}>
         <MotiView 
@@ -46,19 +79,38 @@ const SignIn = ({navigation}) => {
             <Text style={styles.title}> Nome </Text>
             <TextInput
             placeholder="Digite seu nome.."
-            value={userName}
-            onChangeText={(username) => setUserName(username)}
+            value={nome}
+            onChangeText={setNome}
             style={styles.input}
+          />
+            <Text style={styles.title}> E-mail </Text>
+            <TextInput
+            placeholder="Digite seu e-mail"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+          />
+            <Text style={styles.title}> Senha </Text>
+            <TextInput
+            placeholder="Digite sua senha"
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+            secureTextEntry
           />
             <TouchableOpacity 
               style={styles.button}
-              onPress={() =>
-                navigation.navigate('Home', {
-                  paramKey: userName,
-                })
-              }>
-              <Text style={styles.buttonText}>Acessar</Text>
+              onPress={handleCadastro}
+            >
+              <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+            style={styles.buttonLogin}
+            onPress={ () => navigation.navigate('Login')}
+            >
+            <Text style={styles.pageLogin}>Já tem uma conta? Faça login</Text>
+            </TouchableOpacity>
+            
           </MotiView>
       </View>
   );
@@ -111,5 +163,12 @@ const styles = StyleSheet.create({
   buttonText:{
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  buttonLogin:{
+    width: '100%',
+    paddingVertical: 8,
+    marginTop: 14,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
