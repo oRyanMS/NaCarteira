@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "../../config/firebaseconfig"
+import { auth } from '../../config/firebaseconfig';
 
 import { MotiView } from 'moti';
 
@@ -23,6 +23,12 @@ const Login = () => {
 
       // Se o login for bem-sucedido, você vai para a tela principal
       navigation.navigate('Home'); // Navega para a tela principal do aplicativo
+
+      // Recupere o nome do usuário do perfil
+      const user = userCredential.user;
+      const nomeDoUsuario = user.displayName;
+
+      // Agora você tem o nome do usuário disponível na variável nomeDoUsuario
     } catch (error) {
       Alert.alert("Erro ao fazer login: " + error.message);
     }

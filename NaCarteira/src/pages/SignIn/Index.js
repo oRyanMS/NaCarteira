@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { collection, addDoc } from "firebase/firestore";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { db } from '../../config/firebaseconfig'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
 import {
     View,
@@ -25,19 +22,13 @@ const SignIn = () => {
   const handleCadastro = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Após o cadastro bem-sucedido, salve o nome do usuário no Firestore
+  
+      // Atualize o perfil do usuário para incluir o nome
       const user = userCredential.user;
-      const userDocRef = collection(db, "Usuario");
-      await addDoc(userDocRef, {
-        nome: nome,
-        userId: user.uid,
-        // Outros campos necessários
+      await updateProfile(user, {
+        displayName: nome,
       });
-
-      // Salve o nome do usário no AsyncStorage
-      await AsyncStorage.setItem('nomeDoUsuario', nome);
-
+    
       navigation.navigate('Home');
     } catch (error) {
       Alert.alert("Erro ao cadastrar: " + error.message);

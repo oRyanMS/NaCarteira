@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import{
     View,
     StyleSheet,
@@ -17,17 +17,14 @@ const Header = () => {
     const [nomeDoUsuario, setNomeDoUsuario] = useState('');
 
     useEffect(() => {
-        // Recupere o nome do usuário do AsyncStorage
-        AsyncStorage.getItem('nomeDoUsuario')
-          .then(nome => {
-            if (nome) {
-              setNomeDoUsuario(nome);
-            }
-          })
-          .catch(error => {
-            console.error("Erro ao recuperar o nome do usuário:", error);
-          });
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setNomeDoUsuario(user.displayName || 'Nome do Usuário Padrão');
+          }
+        });
       }, []);
+
     return (
         <View style={styles.container}>
             <MotiView style={styles.content} 

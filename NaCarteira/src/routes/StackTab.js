@@ -31,7 +31,7 @@ export default function StackRoutes(){
             }}
             />
             <Stack.Screen 
-            name="home" 
+            name="Home" 
             component={Home}
             options={{
                 headerShown: false
