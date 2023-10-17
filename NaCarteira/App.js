@@ -5,8 +5,6 @@ import AuthRoutes from "./src/routes/authRoutes";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AuthRoutes/>
-    </NavigationContainer>
+      <Routes/>
   );
 }

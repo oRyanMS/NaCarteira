@@ -6,10 +6,9 @@ import { auth } from '../../config/firebaseconfig';
 
 import { MotiView } from 'moti';
 
-const Login = () => {
+const Login = ( { navigation } ) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -22,7 +21,7 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       // Se o login for bem-sucedido, você vai para a tela principal
-      navigation.navigate('Home'); // Navega para a tela principal do aplicativo
+      navigation.navigate('TabRoutes'); // Navega para a tela principal do aplicativo
 
       // Recupere o nome do usuário do perfil
       const user = userCredential.user;

@@ -51,7 +51,7 @@ export default function Welcome() {
         <Text style={styles.title}>Faça cada centavo valer a pena, monitore seus gastos com ajuda do Walletin</Text>
         <TouchableOpacity 
         style={styles.button}
-        onPress={ () => navigation.navigate('SignIn')}>
+        onPress={ () => navigation.navigate('Login')}>
           <Text style={styles.buttonText}>Começar</Text>
         </TouchableOpacity>
       </MotiView>

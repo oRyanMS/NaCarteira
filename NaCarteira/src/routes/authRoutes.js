@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StackRoutes from './StackTab';
@@ -21,21 +20,27 @@ export default function AuthRoutes() {
     checkOnboardingStatus();
   }, []);
 
+  // Redirecione para TabRoutes se o onboarding estiver completo e o usuário estiver autenticado
+  if (onboardingCompleted) {
+    return (
+      <TabRoutes/>
+    );
+  }
+
+  // Caso contrário, redirecione para as rotas de introdução ou cadastro
   return (
-      <Stack.Navigator>
-        {onboardingCompleted ? (
-          <Stack.Screen
-            name="TabRoutes"
-            component={TabRoutes}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="StackRoutes"
-            component={StackRoutes}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
+    <Stack.Navigator initialRouteName="StackRoutes">
+      <Stack.Screen
+        name="StackRoutes"
+        component={StackRoutes}
+        options={{ headerShown: false}}
+        
+      />
+      <Stack.Screen
+        name="TabRoutes"
+        component={TabRoutes}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }

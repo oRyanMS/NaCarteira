@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native'
-import TabRoutes from './BottomTab'
+import AuthRoutes from './authRoutes'
 
 export default function Routes() {
     return(
         <NavigationContainer>
-            <TabRoutes/>
+            <AuthRoutes/>
         </NavigationContainer>
     )
 }
