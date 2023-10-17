@@ -19,7 +19,7 @@ export default function Welcome() {
       
       <View style={styles.containerLogo}>
         <MotiImage
-        source={require('../../assets/NaCarteiraLogo.png')}
+        source={require('../../assets/WalletinSemFundo.png')}
         style={{ width: '100%' }}
         resizeMode="contain"
         from={{
@@ -48,7 +48,14 @@ export default function Welcome() {
         duration: 600,
       }}
       >
-        <Text style={styles.title}>Faça cada centavo valer a pena, monitore seus gastos com ajuda do Walletin</Text>
+        <View style={styles.centerText}>
+        <Text style={styles.title}>Faça cada centavo</Text>
+        <Text style={styles.penatitle}>valer a pena!</Text>
+        </View>
+        <View style={styles.centerSubTitle}>
+        <Text style={styles.subtitle}>Monitore seus gastos</Text>
+        <Text style={styles.subtitle2}>com a ajuda do Walletin.</Text>
+        </View>
         <TouchableOpacity 
         style={styles.button}
         onPress={ () => navigation.navigate('Login')}>
@@ -67,10 +74,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#dadada',
   },
   containerLogo:{
-    flex: 2,
-    backgroundColor: '#dadada',
+    flex: 1,
+    backgroundColor: '#FF8C00',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center'
+    borderCurve: 10,
+    borderRadius: 400,
+    marginTop: 50,
+    marginBottom: 70,
+    paddingTop: 80,
+    paddingBottom: 14,
   },
   containerForm:{
     flex: 1,
@@ -80,10 +93,29 @@ const styles = StyleSheet.create({
     paddingStart: '5%',
     paddingEnd: '5%',
   },
+  centerText:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  centerSubTitle:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   title:{
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginTop: 20,
+  },
+  penatitle:{
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  subtitle:{
+    fontSize: 24,
+  },
+  subtitle2:{
+    fontSize: 24,
     marginBottom: 12,
   },
   button:{
