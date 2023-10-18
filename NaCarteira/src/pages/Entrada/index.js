@@ -20,7 +20,7 @@ const Entrada = () => {
   const [label, setLabel] = useState("");
   const [value, setValue] = useState("");
   const [date, setDate] = useState(new Date());
-  const [type, setType] = useState(false);
+  const [type, setType] = useState(true);
   const navigation = useNavigation();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -50,15 +50,15 @@ const Entrada = () => {
     addDoc(collection(db, `users/${user.uid}/Movements`), {
       label: label,
       value: value,
-      // Formate a data no formato brasileiro
-      date: format(date, "dd/MM/yyyy", { locale: ptBR }),
+      date: formatarDataParaExibicao(date),
       type: type,
-    }).then(() => {
+    }).then((docRef) => { // docRef contém o ID gerado
       navigation.navigate('Home');
     }).catch(error => {
       console.error("Erro ao adicionar:", error);
     });
   }
+  
 
   return (
     <View style={styles.container}>

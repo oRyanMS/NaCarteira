@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { AntDesign } from '@expo/vector-icons';
 import CustomPlusIcon from "./customIcons";
-
 import Home from "../pages/Home"
 import Entrada from "../pages/Entrada"
 import Configuracao from "../pages/Configuracao";
@@ -27,6 +26,7 @@ export default function TabRoutes() {
                 tabBarIcon: () => <CustomPlusIcon />,
                 tabBarLabel: '', 
               }}
+            screenOptions={{headerShown: true}}
             />
             <Tab.Screen
             name="Configuracao"

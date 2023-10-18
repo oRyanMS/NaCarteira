@@ -36,7 +36,7 @@ export default function Actions() {
         <View style={styles.areaButton}>
             <AntDesign name='shoppingcart' size={26} color={'#000'}/>
         </View>
-        <Text style={styles.labelButton}>Compras</Text>
+        <Text style={styles.labelButton}>Saída</Text>
     </TouchableOpacity>
     
     <TouchableOpacity 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     View,
     Text,
@@ -13,11 +13,22 @@ import {
 
 import { MotiView } from 'moti';
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation();
+
+  useEffect(() => {
+    async function checkOnboardingStatus() {
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+
+      if (onboardingStatus === 'true') {
+        // Navegue para a tela principal ou apropriada após a conclusão do onboarding.
+        navigation.navigate('TabRoutes');
+      }
+    }
+    checkOnboardingStatus();
+  }, []);
 
   const handleCadastro = async () => {
     try {
@@ -29,11 +40,13 @@ const SignIn = () => {
         displayName: nome,
       });
     
-      navigation.navigate('Home');
+      navigation.navigate("TabRoutes");
     } catch (error) {
       Alert.alert("Erro ao cadastrar: " + error.message);
     }
   };
+
+
   return(
     <View style={styles.container}>
         <MotiView 

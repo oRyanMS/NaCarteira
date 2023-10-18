@@ -1,31 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View,
     Text, 
     StyleSheet,
-    Button
+    TouchableOpacity
 } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Configuracao({navigation}) {
+const Configuracao = ({ navigation }) => {
+  
+  useEffect(() => {
+    async function checkOnboardingStatus() {
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
 
-    const handleLogout = async () => {
-        try {
-          await signOut(auth);
-          // O usuário foi desconectado com sucesso
-          navigation.navigate('StackRoutes')
-        } catch (error) {
-          // Ocorreu um erro durante o logout
-          console.error('Erro ao desconectar o usuário:', error);
-        }
-      };
+      if (onboardingStatus !== 'true') {
+        navigation.navigate('StackRoutes');
+      }
+    }
+
+    checkOnboardingStatus();
+  }, []); 
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+      if (onboardingStatus === 'true') {
+        await AsyncStorage.setItem('onboardingCompleted', 'false');
+      }
+
+      navigation.navigate('Logar');
+    } catch (error) {
+      console.error('Erro ao desconectar o usuário:', error);
+    }
+  };
+
+      
  return (
    <View style={styles.container}>
         <Text style={styles.Texto}>Configurações</Text>
-        <Button title="Sair" onPress={handleLogout} />
+        <View>
+        <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={handleLogout}
+        >
+          <Text>Desconectar</Text>
+        </TouchableOpacity>
+        </View>
    </View>
   );
 }
+
+export default Configuracao;
 
 const styles = StyleSheet.create({
     container:{
@@ -35,6 +62,15 @@ const styles = StyleSheet.create({
     },
     Texto:{
         fontSize: 20,
+    },
+    logoutButton:{
+      marginTop: 14,
+      backgroundColor: '#FF8C00',
+      width: '100%',
+      borderRadius: 4,
+      paddingVertical: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
 })
 

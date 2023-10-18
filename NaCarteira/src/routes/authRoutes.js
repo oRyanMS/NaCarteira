@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StackRoutes from './StackTab';
 import TabRoutes from './BottomTab';
 import Home from '../pages/Home';
-import Login from '../pages/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +49,11 @@ export default function AuthRoutes() {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Logar"
+        component={AuthRoutes}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

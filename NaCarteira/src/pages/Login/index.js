@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';

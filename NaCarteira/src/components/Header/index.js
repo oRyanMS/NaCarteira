@@ -5,6 +5,7 @@ import{
     StyleSheet,
     StatusBar,
     TouchableOpacity,
+    Text
 } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
@@ -54,7 +55,7 @@ const Header = () => {
                     delay: 800,
                 }}
                 >
-                {nomeDoUsuario}
+                <Text style={styles.usernameSaudacao}>Olá,</Text> {nomeDoUsuario}
                 </MotiText>
 
                 <TouchableOpacity activeOpacity={0.9} style={styles.buttonUser}>
@@ -86,6 +87,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
         fontWeight: 'bold'
+    },
+    usernameSaudacao:{
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: 'normal'
     },
     buttonUser:{
         width: 44,

@@ -53,14 +53,14 @@ export default function Balance() {
       }}
     >
       <View style={styles.item}>
-        <Text style={styles.itemTitle}>Saldo</Text>
+        <Text style={styles.itemTitle}>Entrada</Text>
         <View style={styles.content}>
           <Text style={styles.currencySymbol}>R$</Text>
           <Text style={styles.balance}>{(entradas - despesas).toFixed(2)}</Text>
         </View>
       </View>
       <View style={styles.item}>
-        <Text style={styles.itemTitle}>Gastos</Text>
+        <Text style={styles.itemTitle}>Saída</Text>
         <View style={styles.content}>
           <Text style={styles.currencySymbol}>R$</Text>
           <Text style={styles.expenses}>{despesas.toFixed(2)}</Text>
