@@ -20,7 +20,7 @@ const Header = () => {
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            setNomeDoUsuario(user.displayName || 'Nome do Usuário Padrão');
+            setNomeDoUsuario(user.displayName || 'Walletin');
           }
         });
       }, []);

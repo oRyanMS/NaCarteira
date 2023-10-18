@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MotiView } from 'moti';
 
-const Login = ( { navigation } ) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    async function checkOnboardingStatus() {
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+
+      if (onboardingStatus === 'true') {
+        // Navegue para a tela principal ou apropriada após a conclusão do onboarding.
+        navigation.navigate('TabRoutes');
+      }
+    }
+
+    checkOnboardingStatus();
+  }, []); // O array vazio indica que este efeito será executado somente uma vez, após a montagem do componente.
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -20,14 +34,21 @@ const Login = ( { navigation } ) => {
       // Realiza o login com o email e senha fornecidos
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // Se o login for bem-sucedido, você vai para a tela principal
-      navigation.navigate('TabRoutes'); // Navega para a tela principal do aplicativo
-
       // Recupere o nome do usuário do perfil
       const user = userCredential.user;
       const nomeDoUsuario = user.displayName;
 
       // Agora você tem o nome do usuário disponível na variável nomeDoUsuario
+
+      // Verifique e atualize o status do onboarding
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+      if (onboardingStatus !== 'true') {
+        // Defina o status do onboarding como 'true' se ainda não estiver definido
+        await AsyncStorage.setItem('onboardingCompleted', 'true');
+      }
+
+      // Navegue para a tela principal após o login
+      navigation.navigate('TabRoutes');
     } catch (error) {
       Alert.alert("Erro ao fazer login: " + error.message);
     }
@@ -35,7 +56,7 @@ const Login = ( { navigation } ) => {
 
   return (
     <View style={styles.container}>
-      <MotiView 
+      <MotiView
         style={styles.containerheader}
         from={{
           translateX: -150
@@ -51,7 +72,7 @@ const Login = ( { navigation } ) => {
       >
         <Text style={styles.tileheader}>Bem-vindo(a)</Text>
       </MotiView>
-      <MotiView 
+      <MotiView
         style={styles.containerForm}
         from={{
           translateY: 300
@@ -79,7 +100,7 @@ const Login = ( { navigation } ) => {
           style={styles.input}
           secureTextEntry
         />
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
         >
@@ -87,7 +108,7 @@ const Login = ( { navigation } ) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
-          onPress={ () => navigation.navigate('SignIn')}
+          onPress={() => navigation.navigate('SignIn')}
         >
           <Text style={styles.pageLogin}>Não possui uma conta? Cadastre-se</Text>
         </TouchableOpacity>

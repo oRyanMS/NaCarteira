@@ -1,84 +1,91 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { collection, getDocs } from 'firebase/firestore';
+import { format, isValid } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import Header from '../../components/Header';
 import Balance from '../../components/Balance';
 import Movements from '../../components/Movements';
 import Actions from '../../components/Actions';
+import { db, auth } from '../../config/firebaseconfig';
 
-const list = [
-  {
-    id: 1,
-    label: 'Boleto conta luz',
-    value: '300,80',
-    date: '17/09/2023',
-    type: 0 //despesas
-  },
-  {
-    id: 2,
-    label: 'Salário',
-    value: '1.200,00',
-    date: '14/09/2023',
-    type: 1 //entrada
-  },
-  {
-    id: 3,
-    label: 'Pix Mãe',
-    value: '100,00',
-    date: '21/09/2023',
-    type: 0 //despesas
-  },
-  {
-    id: 4,
-    label: 'Mesada',
-    value: '500,00',
-    date: '20/09/2023',
-    type: 1 //entrada
-  },
-  {
-    id: 4,
-    label: 'Adrielly pix',
-    value: '1,00',
-    date: '21/09/2023',
-    type: 1 //entrada
-  },
-]
+const Home = () => {
+  const [movements, setMovements] = useState([]);
+  const user = auth.currentUser;
+  const [loading, setLoading] = useState(true);
 
+  // Função para buscar os dados do Firestore e atualizar o estado
+  const fetchMovements = async () => {
+    if (user) {
+      try {
+        const movementsCollection = collection(db, `users/${user.uid}/Movements`);
+        const snapshot = await getDocs(movementsCollection);
+        const newData = [];
 
-export default function Home() {
+        snapshot.forEach((doc) => {
+          const movementData = doc.data();
+          newData.push(movementData);
+        });
+
+        setMovements((prevData) => [...prevData, ...newData]);
+      } catch (error) {
+        console.error('Erro ao buscar as movimentações:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Inicialmente, busque os dados do Firestore
+    fetchMovements();
+  }, [user]);
+
   return (
     <View style={styles.container}>
-        <Header/>
-
-        <Balance saldo="9.250,90" gastos="-527,00"/>
-
-        <Actions/>
-      
-
-        <Text style={styles.title}> Últimas movimentações</Text>
-
+      <Header />
+      <Balance saldo="9.250,90" gastos="-527,00" />
+      <Actions />
+      <Text style={styles.title}> Últimas movimentações</Text>
+      {loading ? (
+        <Text style={styles.loadingText}>Carregando...</Text>
+      ) : (
         <FlatList
-        style={styles.list}
-        data={list}
-        keyExtractor={ (item) => String(item.id)}
-        showsVerticalScrollIndicator={false}
-        renderItem={ ({ item }) => <Movements data={item}/>}/>
-
+          style={styles.list}
+          data={movements}
+          keyExtractor={(item) => item.date.toString()}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <Movements
+              data={{
+                ...item,
+                date: isValid(new Date(item.date)) ? format(new Date(item.date), "dd/MM/yyyy", { locale: ptBR }) : 'Data inválida',
+              }}
+            />
+          )}
+        />
+      )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
   },
-  title:{
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
     margin: 14,
   },
-  list:{
+  list: {
     marginStart: 14,
     marginEnd: 14,
-  }
+  },
+  loadingText:{
+    marginStart: '5%'
+  },
 });
+
+export default Home;

@@ -4,7 +4,9 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    StatusBar,
+    Dimensions
 } from 'react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native'
@@ -19,7 +21,7 @@ export default function Welcome() {
       
       <View style={styles.containerLogo}>
         <MotiImage
-        source={require('../../assets/WalletinSemFundo.png')}
+        source={require('../../assets/WalletinWelcome.png')}
         style={{ width: '100%' }}
         resizeMode="contain"
         from={{
@@ -75,7 +77,6 @@ const styles = StyleSheet.create({
   },
   containerLogo:{
     flex: 1,
-    backgroundColor: '#FF8C00',
     alignItems: 'center',
     justifyContent: 'center',
     borderCurve: 10,

@@ -22,7 +22,7 @@ export default function Movements({ data }) {
             {showValue ?(
             <AnimatePresence exitBeforeEnter>
                 <MotiText 
-                style={data.type === 1 ? styles.value : styles.expanses}
+                style={data.type === true ? styles.value : styles.expanses}
                 from={{
                     translateX: 100,
                 }}
@@ -35,7 +35,7 @@ export default function Movements({ data }) {
                 }}
                 
                 >
-                {data.type === 1 ? `R$ ${data.value}` : `R$ -${data.value}`}
+                {data.type === true ? `R$ ${data.value}` : `R$ -${data.value}`}
                 </MotiText>
             </AnimatePresence>
             ) : (

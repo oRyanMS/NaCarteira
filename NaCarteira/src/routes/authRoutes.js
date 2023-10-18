@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StackRoutes from './StackTab';
 import TabRoutes from './BottomTab';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,13 +14,17 @@ export default function AuthRoutes() {
   useEffect(() => {
     async function checkOnboardingStatus() {
       const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+      console.log('onboardingStatus:', onboardingStatus);
+  
       if (onboardingStatus === 'true') {
+        console.log('Setting onboardingCompleted to true');
         setOnboardingCompleted(true);
       }
     }
-
+  
     checkOnboardingStatus();
   }, []);
+  
 
   // Redirecione para TabRoutes se o onboarding estiver completo e o usuário estiver autenticado
   if (onboardingCompleted) {
@@ -39,6 +45,11 @@ export default function AuthRoutes() {
       <Stack.Screen
         name="TabRoutes"
         component={TabRoutes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
