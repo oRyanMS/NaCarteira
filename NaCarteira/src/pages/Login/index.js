@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'reac
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 import { MotiView } from 'moti';
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function checkOnboardingStatus() {

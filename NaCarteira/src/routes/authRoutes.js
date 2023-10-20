@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StackRoutes from './StackTab';
 import TabRoutes from './BottomTab';
-import Home from '../pages/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +27,24 @@ export default function AuthRoutes() {
   // Redirecione para TabRoutes se o onboarding estiver completo e o usuário estiver autenticado
   if (onboardingCompleted) {
     return (
-      <TabRoutes/>
+      <Stack.Navigator initialRouteName="TabRoutes">
+        <Stack.Screen
+          name="TabRoutes"
+          component={TabRoutes}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StackRoutes"
+          component={StackRoutes}
+          options={{ headerShown: false}}
+          
+        />
+        <Stack.Screen
+          name="AuthRoutes"
+          component={AuthRoutes}
+          options={{ headerShown: false }}
+        />
+    </Stack.Navigator>
     );
   }
 
@@ -47,12 +63,7 @@ export default function AuthRoutes() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Logar"
+        name="AuthRoutes"
         component={AuthRoutes}
         options={{ headerShown: false }}
       />

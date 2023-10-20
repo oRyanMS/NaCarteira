@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
     View,
     Text,
@@ -8,8 +9,6 @@ import {
 } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-
 
 export default function Actions() {
     const navigation = useNavigation();
@@ -19,9 +18,7 @@ export default function Actions() {
     
     <TouchableOpacity 
         style={styles.actionButton}
-        onPress={() =>
-            navigation.navigate('Entrada')
-        }>
+        onPress={ () => navigation.navigate('Entrada')}>
         <View style={styles.areaButton}>
             <AntDesign name='addfolder' size={26} color={'#000'}/>
         </View>
@@ -30,9 +27,8 @@ export default function Actions() {
 
     <TouchableOpacity 
         style={styles.actionButton}
-        onPress={() =>
-            navigation.navigate('Compra')
-        }>
+        onPress={ () => navigation.navigate('Compra')}
+        >
         <View style={styles.areaButton}>
             <AntDesign name='shoppingcart' size={26} color={'#000'}/>
         </View>
@@ -41,9 +37,8 @@ export default function Actions() {
     
     <TouchableOpacity 
         style={styles.actionButton}
-        onPress={() =>
-            navigation.navigate('Carteira')
-        }>
+        onPress={ () => navigation.navigate('Carteira')}
+        >
         <View style={styles.areaButton}>
             <AntDesign name='creditcard' size={26} color={'#000'}/>
         </View>

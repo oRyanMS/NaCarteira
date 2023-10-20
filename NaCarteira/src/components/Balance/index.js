@@ -1,39 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { db, auth } from '../../config/firebaseconfig';
 import { MotiView } from 'moti';
 
-export default function Balance() {
-  const [entradas, setEntradas] = useState(0);
-  const [despesas, setDespesas] = useState(0);
+export default function Balance({ entradas, despesas, setDespesas, setEntradas }) {
+  const user = auth.currentUser;
 
   useEffect(() => {
-    // Substitua isso com sua lógica para buscar os dados das movimentações
-    const movimentacoes = [
-      {
-        type: true,
-        value: '1200.00', // Valor de entrada
-      },
-      {
-        type: false,
-        value: '300.80', // Valor de despesa
-      },
-      // Adicione mais movimentações conforme necessário
-    ];
+    if (!user || !user.uid) {
+      console.log("Usuário não autenticado ou ausente.");
+      return;
+    }
 
-    let entradasTotal = 0;
-    let despesasTotal = 0;
+    const fetchMovimentacoes = async () => {
+      try {
+        const movimentacoesRef = db.collection(`users/${user.uid}/Movements`);
+        const querySnapshot = await movimentacoesRef.get();
 
-    movimentacoes.forEach((movimentacao) => {
-      if (movimentacao.type) {
-        entradasTotal += parseFloat(movimentacao.value.replace(',', '.'));
-      } else {
-        despesasTotal += parseFloat(movimentacao.value.replace(',', '.'));
+        let totalEntradas = 0;
+        let totalDespesas = 0;
+
+        querySnapshot.forEach((doc) => {
+          const movementData = doc.data();
+          if (movementData.type === 'entrada') {
+            totalEntradas += movementData.amount;
+          } else if (movementData.type === 'despesa') {
+            totalDespesas += movementData.amount;
+          }
+        });
+
+        // Não atualize diretamente as propriedades, use as funções passadas como propriedades.
+        // setEntradas(totalEntradas);
+        // setDespesas(totalDespesas);
+      } catch (error) {
+        console.error("Erro ao buscar movimentações:", error);
       }
-    });
+    };
 
-    setEntradas(entradasTotal);
-    setDespesas(despesasTotal);
-  }, []);
+    fetchMovimentacoes();
+  }, [user, setEntradas, setDespesas]);
+
+  const saldo = entradas - despesas;
 
   return (
     <MotiView
@@ -56,7 +63,7 @@ export default function Balance() {
         <Text style={styles.itemTitle}>Entrada</Text>
         <View style={styles.content}>
           <Text style={styles.currencySymbol}>R$</Text>
-          <Text style={styles.balance}>{(entradas - despesas).toFixed(2)}</Text>
+          <Text style={styles.balance}>{entradas.toFixed(2)}</Text>
         </View>
       </View>
       <View style={styles.item}>
@@ -64,6 +71,13 @@ export default function Balance() {
         <View style={styles.content}>
           <Text style={styles.currencySymbol}>R$</Text>
           <Text style={styles.expenses}>{despesas.toFixed(2)}</Text>
+        </View>
+      </View>
+      <View style={styles.item}>
+        <Text style={styles.itemTitle}>Saldo</Text>
+        <View style={styles.content}>
+          <Text style={styles.currencySymbol}>R$</Text>
+          <Text style={styles.saldo}>{saldo.toFixed(2)}</Text>
         </View>
       </View>
     </MotiView>
@@ -105,4 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#e74c3c',
   },
+  saldo: {
+    fontSize: 22,
+  }
 });

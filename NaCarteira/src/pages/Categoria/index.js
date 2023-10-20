@@ -1,52 +1,34 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    TextInput,
-} from 'react-native';
-import { MotiView } from 'moti';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const Categoria = () => {
-    return(
-        <View style={styles.container}>
-            <MotiView 
-                style={styles.containerheader}
-                from={{
-                translateX: -150
-                }}
-                animate={{
-                translateX: 0
-                }}
-                transition={{
-                type:"timing",
-                duration: 700,
-                delay: 200,
-                
-                }}
-            >
-                <Text style={styles.tileheader}>Categorias</Text>
-            </MotiView>
-        </View>
-    )
-}
-
-export default Categoria;
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require('../../assets/WalletinSemFundo.png')}
+        style={styles.image}
+      />
+      <Text style={styles.text}>Funcionalidade nova em breve</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        backgroundColor: '#dadada',
-    },
-    containerheader:{
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%',
-    },
-    tileheader:{
-        fontSize: 28,
-        fontWeight: 'bold'
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#FF8C00'
+  },
+  image: {
+    width: 400, 
+    height: 400, 
+  },
+  text: {
+    fontSize: 26,
+    marginTop: 16,
+    fontWeight:'bold'
+  },
+});
 
-})
+export default Categoria;

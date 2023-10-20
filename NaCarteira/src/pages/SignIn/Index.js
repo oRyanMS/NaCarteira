@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import {
     View,
     Text,
@@ -13,10 +14,11 @@ import {
 
 import { MotiView } from 'moti';
 
-const SignIn = ({navigation}) => {
+const SignIn = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function checkOnboardingStatus() {
@@ -39,6 +41,11 @@ const SignIn = ({navigation}) => {
       await updateProfile(user, {
         displayName: nome,
       });
+
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+      if (onboardingStatus !== 'true') {
+        await AsyncStorage.setItem('onboardingCompleted', 'true');
+      }
     
       navigation.navigate("TabRoutes");
     } catch (error) {

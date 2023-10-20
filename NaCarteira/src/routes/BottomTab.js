@@ -3,7 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 import CustomPlusIcon from "./customIcons";
 import Home from "../pages/Home"
 import Entrada from "../pages/Entrada"
-import Configuracao from "../pages/Configuracao";
+import Dicas from "../pages/Dicas";
 
 
 const Tab = createBottomTabNavigator();
@@ -29,10 +29,10 @@ export default function TabRoutes() {
             screenOptions={{headerShown: true}}
             />
             <Tab.Screen
-            name="Configuracao"
-            component={Configuracao}
+            name="Dicas"
+            component={Dicas}
             options={{
-                tabBarIcon: ({color, size}) => <AntDesign name='setting' color={color} size={size} />,
+                tabBarIcon: ({color, size}) => <AntDesign name='book' color={color} size={size} />,
                 tabBarLabel: "",
             }}
             />

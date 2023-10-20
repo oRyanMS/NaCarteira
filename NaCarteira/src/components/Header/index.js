@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 import{
     View,
     StyleSheet,
@@ -16,6 +17,7 @@ const statusBarHeigth = StatusBar.currentHeight ? StatusBar.currentHeight + 22 :
 
 const Header = () => {
     const [nomeDoUsuario, setNomeDoUsuario] = useState('');
+    const navigation = useNavigation();
 
     useEffect(() => {
         const auth = getAuth();
@@ -58,9 +60,18 @@ const Header = () => {
                 <Text style={styles.usernameSaudacao}>Olá,</Text> {nomeDoUsuario}
                 </MotiText>
 
+                <View style={styles.userAndSettings}>
+                <TouchableOpacity 
+                activeOpacity={0.9} 
+                style={styles.buttonSettings}
+                onPress={ () => navigation.navigate('Configuracao')}
+                >
+                    <Feather name='settings' size={20} color={"#fff"}/>
+                </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.9} style={styles.buttonUser}>
                     <Feather name='user' size={27} color={"#fff"}/>
                 </TouchableOpacity>
+                </View>
             </MotiView>
         </View>
     );
@@ -100,5 +111,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 44/2,
+    },
+    userAndSettings:{
+        flexDirection: 'row',
+    },
+    buttonSettings:{
+        width: 30,
+        height: 30,
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 44/2,
+        marginTop: '10%',
+        marginRight: 10,
     }
 })

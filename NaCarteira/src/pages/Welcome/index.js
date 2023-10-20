@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -10,10 +10,24 @@ import {
 } from 'react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Welcome() {
   const navigation = useNavigation();
+
+  useEffect(() => {
+    async function checkOnboardingStatus() {
+      const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
+
+      if (onboardingStatus === 'true') {
+        // Navegue para a tela principal ou apropriada após a conclusão do onboarding.
+        navigation.navigate('TabRoutes');
+      }
+    }
+
+    checkOnboardingStatus();
+  }, []);
 
 
   return (

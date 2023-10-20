@@ -7,15 +7,17 @@ import { View,
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
-const Configuracao = ({ navigation }) => {
+const Configuracao = () => {
+  const navigation = useNavigation();
   
   useEffect(() => {
     async function checkOnboardingStatus() {
       const onboardingStatus = await AsyncStorage.getItem('onboardingCompleted');
 
       if (onboardingStatus !== 'true') {
-        navigation.navigate('StackRoutes');
+        navigation.navigate('Logar');
       }
     }
 
@@ -30,7 +32,7 @@ const Configuracao = ({ navigation }) => {
         await AsyncStorage.setItem('onboardingCompleted', 'false');
       }
 
-      navigation.navigate('Logar');
+      navigation.navigate('AuthRoutes');
     } catch (error) {
       console.error('Erro ao desconectar o usuário:', error);
     }
@@ -39,8 +41,9 @@ const Configuracao = ({ navigation }) => {
       
  return (
    <View style={styles.container}>
-        <Text style={styles.Texto}>Configurações</Text>
-        <View>
+    <View>
+        <Text style={styles.Texto}>Desconectar do App</Text>
+        <View styles={styles.logoutView}>
         <TouchableOpacity
         style={styles.logoutButton}
         onPress={handleLogout}
@@ -48,6 +51,7 @@ const Configuracao = ({ navigation }) => {
           <Text>Desconectar</Text>
         </TouchableOpacity>
         </View>
+    </View>
    </View>
   );
 }
@@ -58,7 +62,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems:'center',
+        
     },
     Texto:{
         fontSize: 20,
@@ -72,5 +77,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    logoutView:{
+      flex: 1
+    }
 })
 
