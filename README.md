@@ -4,7 +4,7 @@ Nosso projeto é um aplicativo feito em React Native utilizando o Firebase como 
 Ele possui o intuito de ajudar as pessoas com o controle das suas finanças.
 
 
-# Desenvolvido por:
+# Desenvolvedores
 
 - Adrielly Rayssa Lima
 - Ana Luiza Melo
